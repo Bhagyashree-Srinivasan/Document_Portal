@@ -1,0 +1,11 @@
+ipykernel
+langchain
+python-dotenv
+langchain_groq
+langchain-google-genai
+langchain_openai
+langchain_community
+pypdf
+faiss-cpu
+structlog
+-e .
