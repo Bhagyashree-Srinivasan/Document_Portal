@@ -2,6 +2,11 @@ venv
 .env
 Document_Portal.egg-info
 logs
+data/
 
 # Python cache files
 __pycache__
+
+#test files
+test.py
+*.pyc
