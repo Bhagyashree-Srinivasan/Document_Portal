@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 from typing import List, Union
 from enum import Enum
 
+#DocAnalyzer
 class Metadata(BaseModel):
     Summary: List[str] = Field(default_factory=list, description="Summary of the document")
     Title: str 
@@ -12,3 +13,11 @@ class Metadata(BaseModel):
     Language: str
     PageCount: Union[int, str]
     SentimentTone: str
+
+#DocComparison
+class ChangeFormat(BaseModel):
+    Page: str
+    changes: str
+
+class SummaryResponse(RootModel(list[ChangeFormat])):
+    pass
