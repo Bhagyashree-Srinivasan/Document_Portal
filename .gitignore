@@ -10,3 +10,6 @@ __pycache__
 #test files
 test.py
 *.pyc
+
+#FAISS 
+faiss_index/

@@ -2,7 +2,7 @@ import os
 import sys
 from dotenv import load_dotenv
 
-from langchain_google_genai import GoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
@@ -37,16 +37,17 @@ class ModelLoader:
             log.error(f"Missing environment variables", missing_vars=missing_vars)
             raise DocumentPortalException("Missing required environment variables", sys)
         
-        log.info("environment variables validated successfully", available_keys=list(key for key in self.api_keys.keys() if self.api_keys[key]))
+        log.info("environment variables validated successfully", available_keys=list(
+            key for key in self.api_keys.keys() if self.api_keys[key]))
 
-    def load_embedding(self):
+    def load_embeddings(self):
         """
         Load and return the embedding model.
         """
         try:
             log.info("Loading embedding model....")
             model_name = self.config["embedding_model"]["model_name"]
-            return GoogleGenerativeAI(model = model_name)
+            return GoogleGenerativeAIEmbeddings(model = model_name)
         except Exception as e:
             log.error("Failed to load embedding model", error=str(e))
             raise DocumentPortalException("Failed to load embedding model", sys)
@@ -107,7 +108,7 @@ if __name__ == "__main__":
     loader = ModelLoader()
 
     #Test embedding model loading
-    embeddings = loader.load_embedding()
+    embeddings = loader.load_embeddings()
     print("Embedding model loaded successfully: ", embeddings)
 
     #Test LLM model loading
