@@ -13,3 +13,6 @@ test.py
 
 #FAISS 
 faiss_index/
+
+#Code Archive 
+archive/
