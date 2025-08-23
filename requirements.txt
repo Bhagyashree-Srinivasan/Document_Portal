@@ -15,5 +15,9 @@ langchain-core[tracing]
 pytest
 pandas
 docx2txt
+fastapi
+uvicorn
+pylint
+python-multipart
 -e .
 
