@@ -87,7 +87,7 @@ async def analyze_document(file: UploadFile = File(...)) -> Any:
 async def compare_documents(reference: UploadFile = File(...), 
                             actual: UploadFile = File(...)) -> Any:
     try:
-        dc = DocumentComparer()
+        dc = DocumentComparator()
         ref_path, act_path = dc.save_uploaded_files(FastAPIFileAdapter(reference), FastAPIFileAdapter(actual))
         _ = ref_path, act_path
         combined_text = dc.combine_documents()
