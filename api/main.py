@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Dict, Any, Optional, List
 import os
+from pathlib import Path
 
 from src.DocIngestion.data_ingestion import (
     DocHandler,
@@ -30,8 +31,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="../static"), name="static")
-templates = Jinja2Templates(directory="../templates")
+app.mount("/static", StaticFiles(directory = Path(__file__).parent.parent / "static"), name="static")
+templates = Jinja2Templates(directory= Path(__file__).parent.parent / "templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_ui(request: Request):
@@ -86,7 +87,7 @@ async def analyze_document(file: UploadFile = File(...)) -> Any:
 async def compare_documents(reference: UploadFile = File(...), 
                             actual: UploadFile = File(...)) -> Any:
     try:
-        dc = DocumentComparer()
+        dc = DocumentComparator()
         ref_path, act_path = dc.save_uploaded_files(FastAPIFileAdapter(reference), FastAPIFileAdapter(actual))
         _ = ref_path, act_path
         combined_text = dc.combine_documents()

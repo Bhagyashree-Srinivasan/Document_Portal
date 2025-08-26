@@ -24,10 +24,10 @@ class ConversationRAG:
             self.llm = ModelLoader().load_llm()
             self.contextualize_prompt = PROMPT_REGISTRY[PromptType.CONTEXTUALIZE_QUESTION.value]
             self.qa_prompt = PROMPT_REGISTRY[PromptType.CONTEXT_QA.value]
-            if retriever is None:
-                raise ValueError("Retriever cannot be None")
             self.retriever = retriever
-            self._build_lcel_chain()
+            self.chain = None
+            if self.retriever is not None:
+                self._build_lcel_chain()
             self.log.info("Conversation RAG initialized", session_id=session_id)
 
         except Exception as e:
@@ -51,6 +51,7 @@ class ConversationRAG:
             )
 
             self.retriever = vectorstore.as_retriever(search_type = "similarity", search_kwargs = {"k": 5})
+            self._build_lcel_chain()
             self.log.info("Retriever loaded from FAISS", index_path=index_path, session_id=self.session_id)
             return self.retriever
         except Exception as e:
