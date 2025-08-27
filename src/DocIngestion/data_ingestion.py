@@ -54,7 +54,7 @@ class FaissManager:
         return hashlib.sha256(text.encode('utf-8')).hexdigest()   
 
     def _save_meta(self):
-        self.meta_path.write_text(json.dumps(self._meta, ensure_ascii = False, indent = 2), encodings = 'utf-8')
+        self.meta_path.write_text(json.dumps(self._meta, ensure_ascii = False, indent = 2), encoding = 'utf-8')
     
     def add_document(self, docs: List[Document]):
         if self.vs is None:

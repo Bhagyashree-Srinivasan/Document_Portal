@@ -1,13 +1,29 @@
 from __future__ import annotations
+import os
+import sys
+import json
+import uuid
+import hashlib
+import shutil
 from pathlib import Path
-from typing import Iterable, List
+from datetime import datetime, timezone
+from typing import Iterable, List, Optional, Dict, Any
 from fastapi import UploadFile
-from langchain.schema import Document
-from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
-from logger import GLOBAL_LOGGER as log
-from exception.custom_exception import DocumentPortalException
-SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
+import fitz  # PyMuPDF
+from langchain.schema import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
+from langchain_community.vectorstores import FAISS
+
+from utils.model_loader import ModelLoader
+from logger.custom_logger import CustomLogger
+from exception.custom_exception import DocumentPortalException
+
+log = CustomLogger().get_logger(__name__)
+
+SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
+SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
 def load_documents(paths: Iterable[Path]) -> List[Document]:
     """Load docs using appropriate loader based on extension."""
