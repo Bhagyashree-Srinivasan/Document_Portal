@@ -1,0 +1,13 @@
+__pycahe__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.git
+.gitignore
+*.log
+logs/
+data/
+ 
